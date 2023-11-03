@@ -43,9 +43,21 @@ app.post("/webhook", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  // ?test
-  // const data = toEconomic("sima");
-  // res.json(data);
+  let sampleData = {
+    name: "My test product",
+    productNumber: "504",
+    salesPrice: 100,
+    productGroup: {
+      productGroupNumber: 1,
+    },
+  };
+  toEconomic(sampleData)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 });
 
 app.listen(port, () => {
