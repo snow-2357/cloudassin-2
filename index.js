@@ -10,9 +10,23 @@ app.post("/webhook", (req, res) => {
   try {
     const data = req.body; // Data sent by Spotify as JSON
 
-    console.log("notify", data);
+    const formDataForEco = [];
+    const name = data.title;
+    const description = data.body_html;
 
-    // res.sendStatus(200);
+    if (
+      data.variants &&
+      Array.isArray(data.variants) &&
+      data.variants.length > 0
+    ) {
+      data.variants.forEach((variant) => {
+        let salesPrice = variant.price;
+        let productNumber = variant.sku;
+        formDataForEco.push(name, description, salesPrice, productNumber);
+      });
+    } else {
+      console.log("No variants found in the data");
+    }
   } catch (error) {
     console.error(`Error: ${error}`);
     res.sendStatus(500);
