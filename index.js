@@ -44,6 +44,7 @@ app.post("/webhook", (req, res) => {
 });
 
 app.get("/", (req, res) => {
+  // testing
   let sampleData = {
     name: "My test product",
     productNumber: "510",
