@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const { toEconomic, multiply } = require("./utils/createProductApi");
 
 const app = express();
 const port = 3000;
@@ -23,6 +24,14 @@ app.post("/webhook", (req, res) => {
         let salesPrice = variant.price;
         let productNumber = variant.sku;
         formDataForEco.push(name, description, salesPrice, productNumber);
+        // multiple calles for different products
+        // toEconomic(sampleData)
+        //   .then((response) => {
+        //     console.log(response);
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error:", error);
+        //   });
       });
     } else {
       console.log("No variants found in the data");
@@ -34,7 +43,9 @@ app.post("/webhook", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("hi from local");
+  // ?test
+  // const data = toEconomic("sima");
+  // res.json(data);
 });
 
 app.listen(port, () => {
