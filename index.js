@@ -28,8 +28,7 @@ app.post("/webhook", (req, res) => {
         // multiple calles for different products
         toEconomic(sampleData)
           .then((response) => {
-            console.log(response);
-            res.status(200).send("Product added");
+            console.log("product added");
           })
           .catch((error) => {
             console.error(error);
@@ -39,6 +38,7 @@ app.post("/webhook", (req, res) => {
     } else {
       console.log("No variants found in the data");
     }
+    res.status(200).send("All Products added");
   } catch (error) {
     console.error(`Error: ${error}`);
     res.sendStatus(500);
