@@ -29,9 +29,11 @@ app.post("/webhook", (req, res) => {
         toEconomic(sampleData)
           .then((response) => {
             console.log(response);
+            res.status(200).send("Product added");
           })
           .catch((error) => {
-            console.error("Error:", error);
+            console.error(error);
+            res.status(500).send("Error: " + error);
           });
       });
     } else {
@@ -45,14 +47,16 @@ app.post("/webhook", (req, res) => {
 
 app.get("/", (req, res) => {
   // testing
-  let sampleData = {
-    name: "My test product",
-    productNumber: "510",
-    salesPrice: 100,
-    productGroup: {
-      productGroupNumber: 1,
+  let sampleData = [
+    {
+      name: "My test product",
+      productNumber: "511",
+      salesPrice: 100,
+      productGroup: {
+        productGroupNumber: 1,
+      },
     },
-  };
+  ];
   toEconomic(sampleData)
     .then((response) => {
       console.log(response);
