@@ -25,13 +25,13 @@ app.post("/webhook", (req, res) => {
         let productNumber = variant.sku;
         formDataForEco.push(name, description, salesPrice, productNumber);
         // multiple calles for different products
-        // toEconomic(sampleData)
-        //   .then((response) => {
-        //     console.log(response);
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error:", error);
-        //   });
+        toEconomic(sampleData)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       });
     } else {
       console.log("No variants found in the data");
