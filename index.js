@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { toEconomic, multiply } = require("./utils/createProductApi");
+require("dotenv").config();
 
 const app = express();
 const port = 3000;
@@ -45,7 +46,7 @@ app.post("/webhook", (req, res) => {
 app.get("/", (req, res) => {
   let sampleData = {
     name: "My test product",
-    productNumber: "504",
+    productNumber: "510",
     salesPrice: 100,
     productGroup: {
       productGroupNumber: 1,
