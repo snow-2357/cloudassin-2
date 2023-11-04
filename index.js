@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { toEconomic, multiply } = require("./utils/createProductApi");
+const { findCustomer, createCustomer } = require("./utils/createUserApi");
+const { createInvoice } = require("./utils/createOrderApi.");
 require("dotenv").config();
 
 const app = express();
@@ -45,9 +47,29 @@ app.post("/webhook-create-product", (req, res) => {
   }
 });
 
-app.post("/webhook-create-invoice", (req, res) => {
+app.post("/webhook-create-invoice", async (req, res) => {
   try {
     const data = req.body;
+    const customer = data.customer;
+    const products = data.line_items; //its a arraay of object
+
+    // find customer with api call
+    const foundCustomer = await findCustomer(customer.email);
+
+    if (foundCustomer) {
+      console.log("user");
+      // If customer is found, call the order invoice API
+      // const orderInvoice = await createOrderInvoice(customer, products);
+      // console.log("Order invoice created:", orderInvoice);
+      // res.status(200).send("Order created");
+    } else {
+      const newCustomer = await createCustomer(customer);
+
+      // const orderInvoice = await createOrderInvoice(newCustomer, products);
+      // console.log("Order invoice created:", orderInvoice);
+
+      res.status(200).send("Order created");
+    }
 
     console.log(data, "order");
 
@@ -58,8 +80,8 @@ app.post("/webhook-create-invoice", (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  // testing
+app.get("/", async (req, res) => {
+  // testing2
   // let sampleData = [
   //   {
   //     name: "My test product",
@@ -77,7 +99,25 @@ app.get("/", (req, res) => {
   //   .catch((error) => {
   //     console.error("Error:", error);
   //   });
-  res.send("hi");
+
+  // test3
+  console.log("test3");
+  const foundCustomer = await findCustomer("a");
+  if (foundCustomer) {
+    // Customer found, create the invoice
+    result = await createInvoice("a@a.com");
+  } else {
+    // Customer not found, attempt to create a new customer
+    const newCustomer = await createCustomer("datas");
+
+    if (newCustomer) {
+      // Customer created successfully, create the invoice
+      result = await createInvoice("a@a.com");
+    } else {
+      console.error("Customer creation failed");
+      return res.status(400).send("Customer creation failed");
+    }
+  }
 });
 
 app.listen(port, () => {

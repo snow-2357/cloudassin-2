@@ -200,7 +200,7 @@
 //       country_code: 'IN',
 //       province_code: 'AS'
 //     },
-
+data;
 //     customer: {
 //       id: 6909957898468,
 //       email: 'simantaray0@gmail.com',
@@ -249,7 +249,7 @@
 //     },
 //     discount_applications: [],
 //     fulfillments: [],
-
+data;
 //     line_items: [
 //       {
 //         id: 13456430039268,
