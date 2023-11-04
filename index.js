@@ -128,17 +128,50 @@ app.post("/webhook-create-invoice", async (req, res) => {
 // });
 
 app.get("/", (req, res) => {
-  let sampleData = {
-    name: "My test product",
-    description: "aa",
-    productNumber: 64282194723044,
-    salesPrice: 100,
-    productGroup: {
-      productGroupNumber: 1,
+  let sampleInvoiceData = {
+    date: "2023-11-04",
+    currency: "DKK",
+    paymentTerms: {
+      paymentTermsNumber: 2,
+      daysOfCredit: 30,
+      name: "Lobende maned 30 dage",
+      paymentTermsType: "invoiceMonth",
     },
+    customer: {
+      customerNumber: 10,
+    },
+    recipient: {
+      name: "Sima test",
+      vatZone: {
+        name: "Domestic",
+        vatZoneNumber: 1,
+        enabledForCustomer: true,
+        enabledForSupplier: true,
+      },
+    },
+
+    layout: {
+      layoutNumber: 21,
+    },
+
+    lines: [
+      {
+        quantity: 1.0,
+        product: {
+          productNumber: "44282244628708",
+        },
+      },
+      {
+        quantity: 1.0,
+        product: {
+          productNumber: "44282239090916",
+        },
+      },
+    ],
   };
-  toEconomic(sampleData)
+  createInvoice(sampleInvoiceData)
     .then((response) => {
+      res.send(response);
       console.log(response);
     })
     .catch((error) => {
