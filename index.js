@@ -67,12 +67,26 @@ app.post("/webhook-create-invoice", async (req, res) => {
     if (foundCustomer) {
       console.log("user");
       //
-      res.status(200).send("invoice created");
+      createInvoice(sampleInvoiceData)
+        .then((response) => {
+          res.status(200).send("invoice created");
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     } else {
       const newCustomer = await createCustomer(customer);
       if (newCustomer) {
         //
-        res.status(200).send("invoice created");
+        createInvoice(sampleInvoiceData)
+          .then((response) => {
+            res.status(200).send("invoice created");
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
     }
 
@@ -84,48 +98,6 @@ app.post("/webhook-create-invoice", async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-// app.get("/", async (req, res) => {
-//   // testing2
-//   // let sampleData = [
-//   //   {
-//   //     name: "My test product",
-//   //     productNumber: "511",
-//   //     salesPrice: 100,
-//   //     productGroup: {
-//   //       productGroupNumber: 1,
-//   //     },
-//   //   },
-//   // ];
-//   // toEconomic(sampleData)
-//   //   .then((response) => {
-//   //     console.log(response);
-//   //   })
-//   //   .catch((error) => {
-//   //     console.error("Error:", error);
-//   //   });
-
-//   // test3
-//   console.log("test3");
-//   // const createuser = await createInvoice("simatest@gmail.com");
-//   if (createuser) {
-//     // Customer found, create the invoice
-//     // result = await createInvoice("a@a.com");
-//     console.log(createuser);
-//   } else {
-//     console.log("error1");
-//     // Customer not found, attempt to create a new customer
-//     // const newCustomer = await createCustomer("datas");
-
-//     // if (newCustomer) {
-//     //   // Customer created successfully, create the invoice
-//     //   result = await createInvoice("a@a.com");
-//     // } else {
-//     //   console.error("Customer creation failed");
-//     //   return res.status(400).send("Customer creation failed");
-//     // }
-//   }
-// });
 
 app.get("/", (req, res) => {
   let sampleInvoiceData = {

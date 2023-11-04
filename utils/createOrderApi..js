@@ -1,24 +1,45 @@
 const axios = require("axios");
 
-// let sampleData = {
+// let sampleInvoiceData = {
+//   date: "2023-11-04",
 //   currency: "DKK",
+//   paymentTerms: {
+//     paymentTermsNumber: 2,
+//     daysOfCredit: 30,
+//     name: "Lobende maned 30 dage",
+//     paymentTermsType: "invoiceMonth",
+//   },
 //   customer: {
-//     customerNumber: 1,
+//     customerNumber: 10,
 //   },
-//   data: "2023-11-04",
-//   layout: {
-//     layoutNumber: 21,
-//     self: "https://restapi.e-conomic.com/layouts/21",
-//   },
-//   paymentTermsNumber: 2,
 //   recipient: {
 //     name: "Sima test",
 //     vatZone: {
+//       name: "Domestic",
 //       vatZoneNumber: 1,
-//       self: "https://restapi.e-conomic.com/vat-zones/1",
+//       enabledForCustomer: true,
+//       enabledForSupplier: true,
 //     },
-//     nemHandelType: "corporateIdentificationNumber",
 //   },
+
+//   layout: {
+//     layoutNumber: 21,
+//   },
+
+//   lines: [
+//     {
+//       quantity: 1.0,
+//       product: {
+//         productNumber: "44282244628708",
+//       },
+//     },
+//     {
+//       quantity: 1.0,
+//       product: {
+//         productNumber: "44282239090916",
+//       },
+//     },
+//   ],
 // };
 
 async function createInvoice(orderData) {
