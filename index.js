@@ -105,18 +105,20 @@ app.get("/", async (req, res) => {
   const foundCustomer = await findCustomer("a");
   if (foundCustomer) {
     // Customer found, create the invoice
-    result = await createInvoice("a@a.com");
+    // result = await createInvoice("a@a.com");
+    console.log(foundCustomer);
   } else {
+    console.log("error");
     // Customer not found, attempt to create a new customer
-    const newCustomer = await createCustomer("datas");
+    // const newCustomer = await createCustomer("datas");
 
-    if (newCustomer) {
-      // Customer created successfully, create the invoice
-      result = await createInvoice("a@a.com");
-    } else {
-      console.error("Customer creation failed");
-      return res.status(400).send("Customer creation failed");
-    }
+    // if (newCustomer) {
+    //   // Customer created successfully, create the invoice
+    //   result = await createInvoice("a@a.com");
+    // } else {
+    //   console.error("Customer creation failed");
+    //   return res.status(400).send("Customer creation failed");
+    // }
   }
 });
 
