@@ -1,32 +1,38 @@
 const axios = require("axios");
 
-async function findCustomer(customer) {
+async function findCustomer(customerEmail) {
   // Simulated logic to find a customer
   //   ?filter=name$eq:Joe$and:(email$eq:sim@gmail.com)
   const settings = {
     method: "get",
-    url: "https://restapi.e-conomic.com/customers?filter=(email$like:simatest1@gmail.com)",
+    url: `https://restapi.e-conomic.com/customers?filter=(email$like:${customerEmail})`,
     headers: {
       "x-appsecrettoken": process.env.APPSECRETTOKEN,
       "x-agreementgranttoken": process.env.AGREEMENTGRANTTOKEN,
       "Content-Type": "application/json",
     },
-    params: {
-      email: "",
-    },
   };
 
   return axios(settings)
     .then((response) => {
-      return response.data;
+      if (
+        // if collection have customers
+        Array.isArray(response.data.collection) &&
+        response.data.collection.length > 0
+      ) {
+        return true;
+      }
+      return false;
+
+      //   return response.data.collection;
     })
     .catch((error) => {
       throw error;
+      console.log("api error");
     });
-  //   return customerExists ? customer : null;
 }
 
-async function createCustomer(customer) {
+async function createCustomer(customerDetails) {
   // Simulated logic to create a customer
   console.log("user created");
   return "user created";
