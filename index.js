@@ -8,7 +8,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-app.post("/webhook", (req, res) => {
+app.post("/webhook-create-product", (req, res) => {
   try {
     const data = req.body; // Data sent by Spotify as JSON
 
@@ -45,25 +45,39 @@ app.post("/webhook", (req, res) => {
   }
 });
 
+app.post("/webhook-create-invoice", (req, res) => {
+  try {
+    const data = req.body;
+
+    console.log(data, "order");
+
+    res.status(200).send("order created");
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    res.sendStatus(500);
+  }
+});
+
 app.get("/", (req, res) => {
   // testing
-  let sampleData = [
-    {
-      name: "My test product",
-      productNumber: "511",
-      salesPrice: 100,
-      productGroup: {
-        productGroupNumber: 1,
-      },
-    },
-  ];
-  toEconomic(sampleData)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  // let sampleData = [
+  //   {
+  //     name: "My test product",
+  //     productNumber: "511",
+  //     salesPrice: 100,
+  //     productGroup: {
+  //       productGroupNumber: 1,
+  //     },
+  //   },
+  // ];
+  // toEconomic(sampleData)
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //   });
+  res.send("hi");
 });
 
 app.listen(port, () => {
