@@ -19,7 +19,7 @@ async function findCustomer(customerEmail) {
         Array.isArray(response.data.collection) &&
         response.data.collection.length > 0
       ) {
-        return true;
+        return response.data.collection[0].customerNumber;
       }
       return false;
     })
@@ -29,23 +29,23 @@ async function findCustomer(customerEmail) {
     });
 }
 
-let sampleData = {
-  name: "My test product",
-  email: "s@s.com",
-  currency: "DKK",
-  customerGroup: {
-    customerGroupNumber: 1,
-    self: "https://restapi.e-conomic.com/customer-groups/1",
-  },
-  paymentTerms: {
-    paymentTermsNumber: 2,
-    self: "https://restapi.e-conomic.com/payment-terms/2",
-  },
-  vatZone: {
-    vatZoneNumber: 1,
-    self: "https://restapi.e-conomic.com/vat-zones/1",
-  },
-};
+// let sampleData = {
+//   name: "My test product",
+//   email: "s@s.com",
+//   currency: "DKK",
+//   customerGroup: {
+//     customerGroupNumber: 1,
+//     self: "https://restapi.e-conomic.com/customer-groups/1",
+//   },
+//   paymentTerms: {
+//     paymentTermsNumber: 2,
+//     self: "https://restapi.e-conomic.com/payment-terms/2",
+//   },
+//   vatZone: {
+//     vatZoneNumber: 1,
+//     self: "https://restapi.e-conomic.com/vat-zones/1",
+//   },
+// };
 
 async function createCustomer(customerDetails) {
   const data = {
@@ -84,8 +84,8 @@ async function createCustomer(customerDetails) {
 
   return axios(settings)
     .then((response) => {
-      console.log("custome added");
-      return true;
+      console.log("custome added", response.data);
+      return response.data.customerNumber;
     })
     .catch((error) => {
       console.log("api error");

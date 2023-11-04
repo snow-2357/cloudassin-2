@@ -65,9 +65,8 @@ app.post("/webhook-create-invoice", async (req, res) => {
     const foundCustomer = await findCustomer(customer?.email);
 
     if (foundCustomer) {
-      console.log("user");
       //
-      createInvoice(sampleInvoiceData)
+      createInvoice(customer, data.created_at.split("T")[0], foundCustomer)
         .then((response) => {
           res.status(200).send("invoice created");
           console.log(response);
@@ -79,7 +78,7 @@ app.post("/webhook-create-invoice", async (req, res) => {
       const newCustomer = await createCustomer(customer);
       if (newCustomer) {
         //
-        createInvoice(sampleInvoiceData)
+        createInvoice(customer, data.created_at.split("T")[0], newCustomer)
           .then((response) => {
             res.status(200).send("invoice created");
             console.log(response);
@@ -89,10 +88,8 @@ app.post("/webhook-create-invoice", async (req, res) => {
           });
       }
     }
-
-    console.log(data, "order");
-
-    res.status(200).send("order created");
+    console.log(data);
+    // res.status(200).send(data, "order");
   } catch (error) {
     console.error(`Error: ${error}`);
     res.sendStatus(500);
@@ -100,55 +97,73 @@ app.post("/webhook-create-invoice", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  let sampleInvoiceData = {
-    date: "2023-11-04",
-    currency: "DKK",
-    paymentTerms: {
-      paymentTermsNumber: 2,
-      daysOfCredit: 30,
-      name: "Lobende maned 30 dage",
-      paymentTermsType: "invoiceMonth",
-    },
-    customer: {
-      customerNumber: 10,
-    },
-    recipient: {
-      name: "Sima test",
-      vatZone: {
-        name: "Domestic",
-        vatZoneNumber: 1,
-        enabledForCustomer: true,
-        enabledForSupplier: true,
-      },
-    },
+  // let sampleInvoiceData = {
+  //   date: "2023-11-04",
+  //   currency: "DKK",
+  //   paymentTerms: {
+  //     paymentTermsNumber: 2,
+  //     daysOfCredit: 30,
+  //     name: "Lobende maned 30 dage",
+  //     paymentTermsType: "invoiceMonth",
+  //   },
+  //   customer: {
+  //     customerNumber: 10,
+  //   },
+  //   recipient: {
+  //     name: "Sima test",
+  //     vatZone: {
+  //       name: "Domestic",
+  //       vatZoneNumber: 1,
+  //       enabledForCustomer: true,
+  //       enabledForSupplier: true,
+  //     },
+  //   },
 
-    layout: {
-      layoutNumber: 21,
-    },
+  //   layout: {
+  //     layoutNumber: 21,
+  //   },
 
-    lines: [
-      {
-        quantity: 1.0,
-        product: {
-          productNumber: "44282244628708",
-        },
-      },
-      {
-        quantity: 1.0,
-        product: {
-          productNumber: "44282239090916",
-        },
-      },
-    ],
-  };
-  createInvoice(sampleInvoiceData)
-    .then((response) => {
-      res.send(response);
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  //   lines: [
+  //     {
+  //       quantity: 1.0,
+  //       product: {
+  //         productNumber: "44282244628708",
+  //       },
+  //     },
+  //     {
+  //       quantity: 1.0,
+  //       product: {
+  //         productNumber: "44282239090916",
+  //       },
+  //     },
+  //   ],
+  // };
+  // let sampleData = {
+  //   name: "hi",
+  //   email: "s@sima.com",
+  //   currency: "DKK",
+  //   customerGroup: {
+  //     customerGroupNumber: 1,
+  //     self: "https://restapi.e-conomic.com/customer-groups/1",
+  //   },
+  //   paymentTerms: {
+  //     paymentTermsNumber: 2,
+  //     self: "https://restapi.e-conomic.com/payment-terms/2",
+  //   },
+  //   vatZone: {
+  //     vatZoneNumber: 1,
+  //     self: "https://restapi.e-conomic.com/vat-zones/1",
+  //   },
+  // };
+  // createCustomer(sampleData)
+  //   .then((response) => {
+  //     // res.send(response);
+  //     console.log(response);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //   });
+  res.send("hi");
 });
 
 app.listen(port, () => {
