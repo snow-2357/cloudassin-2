@@ -11,7 +11,7 @@ const axios = require("axios");
 
 const toEconomic = (data) => {
   const settings = {
-    method: "post",
+    method: "POST",
     url: "https://restapi.e-conomic.com/products",
     headers: {
       "x-appsecrettoken": process.env.APPSECRETTOKEN,
