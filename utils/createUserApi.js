@@ -22,8 +22,6 @@ async function findCustomer(customerEmail) {
         return true;
       }
       return false;
-
-      //   return response.data.collection;
     })
     .catch((error) => {
       throw error;
@@ -50,6 +48,29 @@ let sampleData = {
 };
 
 async function createCustomer(customerDetails) {
+  const data = {
+    name: `${customerDetails.first_name} ${customerDetails.last_name}`,
+    email: customerDetails.email,
+    phone: customerDetails.phone,
+    currency: customerDetails.currency,
+    city: customerDetails.default_address.city,
+    address: customerDetails.default_address.address1,
+    zip: customerDetails.default_address.zip,
+    country: customerDetails.default_address.country,
+    // required
+    customerGroup: {
+      customerGroupNumber: 1,
+      self: "https://restapi.e-conomic.com/customer-groups/1",
+    },
+    paymentTerms: {
+      paymentTermsNumber: 2,
+      self: "https://restapi.e-conomic.com/payment-terms/2",
+    },
+    vatZone: {
+      vatZoneNumber: 1,
+      self: "https://restapi.e-conomic.com/vat-zones/1",
+    },
+  };
   const settings = {
     method: "post",
     url: `https://restapi.e-conomic.com/customers`,
@@ -58,18 +79,17 @@ async function createCustomer(customerDetails) {
       "x-agreementgranttoken": process.env.AGREEMENTGRANTTOKEN,
       "Content-Type": "application/json",
     },
-    data: sampleData,
+    data: data,
   };
 
   return axios(settings)
     .then((response) => {
       console.log("custome added");
-
-      //   return response.data.collection;
+      return true;
     })
     .catch((error) => {
-      throw error;
       console.log("api error");
+      throw error;
     });
 }
 
